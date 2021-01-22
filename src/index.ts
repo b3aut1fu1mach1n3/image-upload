@@ -30,7 +30,10 @@ const uploadS3 = multer({
   });
 
   app.post('/upload', uploadS3.single('file'),(req, res) => {
-    res.json(req.file);
+    if (!req.file)
+      res.status(500).json("file was not uploaded successfully")
+    else
+      res.status(200).json(req.file);
   });
 
 app.listen(PORT, () => {
