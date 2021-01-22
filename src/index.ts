@@ -36,6 +36,13 @@ const uploadS3 = multer({
       res.status(200).json(req.file);
   });
 
+  app.post('/uploadmany', uploadS3.array('files', 3), (req, res) => {
+    if (req.files.length < 1 )
+      res.status(500).json("files were not uploaded successfully")
+    else
+      res.status(200).json(req.files.length);
+  });
+
 app.listen(PORT, () => {
     console.log(`\n⚡ server is running on port:${PORT} ⚡️\n`);
 });
